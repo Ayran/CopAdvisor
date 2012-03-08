@@ -1,0 +1,32 @@
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        
+        
+       
+        <item
+            android:id="@+idMenu/mensagem"
+            android:title="mensagem"
+            android:icon="@drawable/mensagem"
+            />
+        
+        <item
+            android:id="@+idMenu/amigos"
+            android:title="amigos"
+            android:icon="@drawable/amigos"/>
+        
+        <item
+            android:id="@+idMenu/copa"
+            android:title="copa"
+            android:icon="@drawable/copa"/>
+        
+        <item
+            android:id="@+idMenu/eventos"
+            android:title="eventos"
+            android:icon="@drawable/eventos"/>
+        
+        <item
+            android:id="@+idMenu/configuracoes"
+            android:title="configuracoes"
+            android:icon="@drawable/config"/>
+        
+    </menu>

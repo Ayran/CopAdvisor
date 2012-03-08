@@ -1,166 +1,184 @@
 package br.com.copa;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
 
 
-
-
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Base64;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+//Autor George Dias
+/* Activity principal da aplicação responsável em gerar o mapa com a localizaçao do usuário.
+ *Também possui a implementação do menu principal da aplicação */
 
 
-
-public class CopaAdvisorActivity extends Activity {
-    /** Called when the activity is first created. */
-	private List<Estadio> estadioList = null;
-	private List<String> estadios = null;
+public class CopaAdvisorActivity extends MapActivity implements LocationListener {
+    
+	private static final String CATEGORIA = "copa";
+	private LocalUserOverlay imagem;
+	private MapView mapa;
+	private MapController controlador;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        getEstadiosList();
+       
+         mapa = (MapView) findViewById(R.id.mapaView);
+        
+        //Instancia do controlador do mapa
+         controlador = mapa.getController();
+        
+        //Instancia ums imagem (overlay) que representará o usuario no mapa
+        LocalUserOverlay imagem = new LocalUserOverlay (new PontoIzabel(), R.drawable.red_ball);
+        mapa.getOverlays().add(imagem);
+                
+        //centraliza o mapa em uma determinada coordenada
+        controlador.animateTo(new PontoIzabel());
+        
+        //Centraliza o mapa na última localização conhecida
+       /* Location local = getLocationManager().getLastKnownLocation(LocationManager.GPS_PROVIDER);
+      
+        if(local != null){   //Se existe ultima localização converte para GeoPoint
+        	
+        	Ponto ponto = new Ponto(local);
+        	//Instancia ums imagem (overlay) que representará o usuario no mapa
+        	 imagem = new LocalUserOverlay (ponto, R.drawable.red_ball);
+             mapa.getOverlays().add(imagem);
+        	controlador.setCenter(ponto);
+        }else{
+        	getMensage("Aviso", "Não foi possiver rastrear nova localização");
+        }
+        
+        //GPS Listener
+        getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);*/
+        
+        mapa.setStreetView(true);// configura pra mostrar o mapa no modo street
+        mapa.setClickable(true);
+        //define o zoom do mapa
+        controlador.setZoom(19);
+        mapa.setBuiltInZoomControls(true); 
+       
+       
        
     }
     
+    /*Metodo responsável pelo menu principal*/
     
-    public void getEstadiosList(){
-    	 setContentView(R.layout.list_estadios);
-    
+    public boolean onCreateOptionsMenu(Menu menu){
+    	MenuInflater mainMenu = getMenuInflater();
+    	mainMenu.inflate(R.menu.lista, menu);
     	
-    	//Iniciamos a lista de Estadios
-    	estadios =  new ArrayList<String>();
-    	estadios.add("Fonte Nova");
-    	estadios.add("Maracanã");
-    	estadios.add("Mineirão");
-    	
-    	
-    	//obj ListView
-        ListView combo = (ListView) findViewById(R.id.listEstadios);
-        
-        //Criar um ArrayAdapter do tipo String, que vai fazer aparecer as Strings acima na tela
-        ArrayAdapter<String> adptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,estadios);
-        //Associar o adaptador ao listview
-    	combo.setAdapter(adptador);
-    	//difino a função onItenClick_List para ser chamada quando clicar em um elemento da lista
-    	combo.setOnItemClickListener( buscaEstadio);
-    	
-    	
+    	return true;
     }
     
-    //função executada quando um item da lista de estadios e clicado
+    // Metodo responsável por identificar qual o item de menu escolhido e invocar a Activity correspondente
+    public boolean onOptionsItemSelected(MenuItem itemMenu){
+   	 
+    	switch(itemMenu.getItemId()){
+    	
+    		case R.idMenu.mensagem:
+    			getMensage("CopaAdvisor", "Menu de Mensagem"); 
+    			break;
+    			 
+    		case R.idMenu.amigos: 
+    			getMensage("CopaAdvisor", "Menu Adicionar Amigos");
+    			break;
+   			 	
+    		case R.idMenu.copa: 
+    			/*Manda uma intenção ao SO para executar a activity(tela) desejada*/
+    			Intent it = new Intent(this, MenuCopaActivity.class);
+    			startActivity(it);
+    			break;
+    		
+    		case R.idMenu.eventos: 
+    			getMensage("CopaAdvisor", "Menu Eventos"); 
+    			break;
+    		
+    		case R.idMenu.configuracoes: 
+    			getMensage("CopaAdvisor", "Menu Configurações"); 
+    			break;
+   			 
+   		}
+    	
+    	return super.onOptionsItemSelected(itemMenu);
+     }
     
-    OnItemClickListener buscaEstadio = new OnItemClickListener() {
-        public void onItemClick(AdapterView arg0, View view, int position, long index) {
-            //Pegar o item clicado
-            String nomeEstadio = estadios.get(position);
-           
-            //Faz um requisição ao servidor
-            Estadio estadio = executeRequest(nomeEstadio);
-           
-            //Chama a tela do estadio selecionado
-            showEstadio(estadio);
-            
-        }
-        
-    };
     
+    //GPS
     
-    public Estadio executeRequest(String nomeEstadio){
-        
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.0.0.100:8080/CopaAdvisorServer/principal");
-        
-        try {
-            // Add your data
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("nomeEstadio", nomeEstadio));
-            
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+    private LocationManager getLocationManager(){
+    	LocationManager location = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    	return location;
+    }
 
-            // Executa HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity mensagem = response.getEntity();//pega o json
-             
-            String resp =  EntityUtils.toString(mensagem);// converte o conteudo em string
-                                     
-           //Seta a resposta como um objeto JSON para acessar as informações
-           	JSONObject obJson = new JSONObject(resp);
-             
-            Estadio estadio = new Estadio(obJson);
-            return estadio;
-                     
-        } catch (ClientProtocolException e) {
-        	 getMensage("ERROR" , e.getMessage());
-        } catch (IOException e) {
-        	 getMensage("ERROR" , "IO-ERROR "+e.getMessage());
-        } catch (JSONException e1) {
-        	 getMensage("ERROR" , "IO-ERROR "+ e1.getMessage());
-        }
-        
-		return null;
+    //Esse método deve retornar true se sua aplicação estiver traçando rotas ou violará os termos de uso. 
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	//Método chamado automaticamente pelo Android sempre que a localização do GPS for alterada
+	//Parâmetro location contem a latitude e longitude atual.
+	public void onLocationChanged(Location location) {
+		Log.i(CATEGORIA, "latitude" + location.getLatitude() +" longitude"+ location.getLongitude());
+		GeoPoint geoPoint = new Ponto(location);
+		//Atualiza a imagem que representa o usuario no mapa
+		imagem.setGeoPoint(geoPoint);
+		imagem.setImagem(R.drawable.red_ball);
 		
-    }
-    
-    public void showEstadio(Estadio estadio){
-    	 setContentView(R.layout.estadio_view);
-    	//carrega a imagem
-        byte[] foto = estadio.getFoto();
- 
-        Bitmap bmp=BitmapFactory.decodeByteArray(foto,0,foto.length);// decodifica o array de bytes em um bitmamp
-      //  Bitmap bMapScaled = Bitmap.createScaledBitmap(bmp, 150, 100, true); // define o tamanho da imagem (originalBitmap, newX, newY, true) 
-        																	//  true habilita o filtro
-        
-        ImageView imView = (ImageView)findViewById(R.id.imview);
-        TextView nomeTx = (TextView)findViewById(R.id.nome);
-        TextView cidadeTx = (TextView)findViewById(R.id.cidade);
-        TextView descricaoTx = (TextView)findViewById(R.id.descricao);
-       
-        imView.setImageBitmap(bmp);
-        nomeTx.setText("Nome: "+ estadio.getNome());
-        cidadeTx.setText("Cidade: "+ estadio.getCidade());
-        descricaoTx.setText(estadio.getDescricao());
-       	
-    }
-    
-    
-    public void getMensage(String title,String mensage){
-      	 
-      	 AlertDialog.Builder mensagem = new AlertDialog.Builder(CopaAdvisorActivity.this);
-      	 mensagem.setTitle(title);
-      	 mensagem.setMessage(mensage);
-      	 mensagem.setNeutralButton("Fechar", null);
-      	 mensagem.show();
-      	 
-      	 
-       }
+		mapa.getOverlays().add(imagem);
+		
+		 //Anima o mapa até a nova localização
+		 controlador.animateTo(geoPoint);
+		 
+		 //invalida para desenhar novamente o mapa
+		// mapa.invalidate();
+		
+		
+		
+	}
+
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void getMensage(String title,String mensage){
+	   	 
+	   	 AlertDialog.Builder mensagem = new AlertDialog.Builder(CopaAdvisorActivity.this);
+	   	 mensagem.setTitle(title);
+	   	 mensagem.setMessage(mensage);
+	   	 mensagem.setNeutralButton("Fechar", null);
+	   	 mensagem.show();
+	   	 
+	   	 
+	    }
+	
+	
 }

@@ -1,11 +1,18 @@
 package br.com.copa;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Base64;
 
-public class Estadio {
+//Autor George Dias
+
+//Classe model que conterá as informações do estadio
+//Serializavel para ser passado como parametro para a Activity
+
+public class Estadio implements Serializable{
 	 private int id;
 	    private String nome;
 	    private String descricao;
@@ -20,6 +27,8 @@ public class Estadio {
 	    	this.foto = Base64.decode(estadioJson.get("foto").toString(),estadioJson.get("foto").toString().length());
 	    }
 	    
+	    
+	    public Estadio (){}
 
 	    public String getDescricao() {
 	        return descricao;
@@ -52,6 +61,10 @@ public class Estadio {
 
 	    public void setNome(String nome) {
 	        this.nome = nome;
+	    }
+	    
+	    public void setNome(JSONObject jsonNome) throws JSONException {
+	        this.nome = jsonNome.get("nome").toString() ;
 	    }
 
 	    public void setCidade(String cidade) {
