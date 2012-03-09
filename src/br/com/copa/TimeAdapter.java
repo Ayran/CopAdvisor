@@ -2,6 +2,8 @@ package br.com.copa;
 
 import java.util.List;
 
+import br.com.copa.Model.Time;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +45,12 @@ public class TimeAdapter extends BaseAdapter{
         //Utiliza o XML Time_row para apresentar na tela
         convertView = inflater.inflate(R.layout.time_list, null);
          
-        //Instância os objetos do XML
+        //Instï¿½ncia os objetos do XML
         ImageView bandeira = (ImageView)convertView.findViewById(R.id.bandeira);
         TextView tvTime = (TextView)convertView.findViewById(R.id.nomeTime);
        
              
-        //pega os dados que estão no objeto TimeVO e transfere para os objetos do XML
+        //pega os dados que estï¿½o no objeto TimeVO e transfere para os objetos do XML
         bandeira.setImageResource(time.getBandeira());
         tvTime.setText(time.getNome());
         

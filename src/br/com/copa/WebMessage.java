@@ -19,6 +19,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import br.com.copa.Model.Estadio;
+import br.com.copa.Model.Time;
+import br.com.copa.Model.Usuario;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 

@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import br.com.copa.Model.Ponto;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;

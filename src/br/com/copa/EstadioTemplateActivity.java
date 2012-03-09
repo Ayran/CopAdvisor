@@ -1,5 +1,6 @@
 package br.com.copa;
 
+import br.com.copa.Model.Estadio;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
