@@ -2,6 +2,7 @@ package br.com.copa;
 
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -15,12 +16,12 @@ import android.widget.ListView;
 //Autor George Dias
 
 
-/*Classe responsável pela lista que contém as opções de estádios
-* e pelo encaminhamento para a Activity tamplate que mostrará as
-* informações do estádio escolhido pelo usuário.
+/*Classe responsï¿½vel pela lista que contï¿½m as opï¿½ï¿½es de estï¿½dios
+* e pelo encaminhamento para a Activity tamplate que mostrarï¿½ as
+* informaï¿½ï¿½es do estï¿½dio escolhido pelo usuï¿½rio.
 * 
 * Atributos
-* Array contendo os estadio que serão inseridos na lista
+* Array contendo os estadio que serï¿½o inseridos na lista
 */
 
 public class MenuEstadiosActivity extends ListActivity {
@@ -35,9 +36,9 @@ public class MenuEstadiosActivity extends ListActivity {
 	    	//estadios =  new ArrayList<String>();
 	    	estadios = request.buscaEstadiosRequest();
 	    	//estadios.add("Fonte Nova");
-	    	//estadios.add("Maracanã");
-	    	//estadios.add("Mineirão");
-	    	//Adaptador que irá inserir os elementos do Array na lista
+	    	//estadios.add("Maracanï¿½");
+	    	//estadios.add("Mineirï¿½o");
+	    	//Adaptador que irï¿½ inserir os elementos do Array na lista
 	    	ArrayAdapter<String>adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,estadios);
 	    	setListAdapter(adapter);
 	    }
@@ -45,15 +46,15 @@ public class MenuEstadiosActivity extends ListActivity {
 	 @Override
 	 protected void onListItemClick(ListView l, View v,int position, long id){
 		 super.onListItemClick(l, v, position, id);
-		 //Obtem o estadio escolhido pelo usuário
+		 //Obtem o estadio escolhido pelo usuï¿½rio
 		 String nomeEstadio = estadios.get(position);
 		
-		 //Objeto responsável por executar as requisições ao servidor       
+		 //Objeto responsï¿½vel por executar as requisiï¿½ï¿½es ao servidor       
 		 WebMessage ponte = new WebMessage();
 		 Estadio estadio = ponte.executeRequest(nomeEstadio);
-		//Solicita ao SO a execução da Activity
-		 Intent it = new Intent(this,EstadioTamplateActivity.class);
-		//Objeto que armazenará o objeto estadio para ser passado como parametro para a Activity invocada
+		//Solicita ao SO a execuï¿½ï¿½o da Activity
+		 Intent it = new Intent(this,EstadioTemplateActivity.class);
+		//Objeto que armazenarï¿½ o objeto estadio para ser passado como parametro para a Activity invocada
 		Bundle parametro = new Bundle();
 		parametro.putSerializable("estadio", estadio);
 		

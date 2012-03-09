@@ -18,7 +18,7 @@
        <uses-library android:name="com.google.android.maps" />
        
         <activity
-            android:name=".LoginActivity"
+            android:name=".CopaAdvisorActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,12 @@
         </activity>
         <activity android:name=".MenuXMLActivity"/>
          <activity android:name=".MenuCopaActivity"/>
-          <activity android:name=".MenuEstadiosActivity"/>
-          <activity android:name=".EstadioTamplateActivity"/>
+       <activity android:name=".MenuEstadiosActivity"/>
+          <activity android:name=".EstadioTemplateActivity"/>
           <activity android:name=".ListaTimesActivity"/>
            <activity android:name=".CopaAdvisorActivity"/>
+           <activity android:name=".TimeTemplateActivity"/>
+           
     </application>
 
 </manifest>

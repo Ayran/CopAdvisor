@@ -31,12 +31,12 @@ import android.app.AlertDialog;
 public class WebMessage extends Activity{
 	
 	 private HttpClient httpclient = new DefaultHttpClient();
-     private HttpPost httppost = new HttpPost("http://10.0.0.101:8080/CopaAdvisorServer/principal");
+     private HttpPost httppost = new HttpPost("http://192.168.1.2:8080/CopaAdvisorServer/principal");
 
 
      
      public Usuario autenticarUsuario(String login, String password){
-    	 HttpPost post = new HttpPost("http://10.0.0.101:8080/CopaAdvisorServer/loginServlet");
+    	 HttpPost post = new HttpPost("http://192.168.1.2:8080/CopaAdvisorServer/loginServlet");
          try {
              // Add your data
              List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -70,7 +70,40 @@ public class WebMessage extends Activity{
  		return null;
  		
      }  
-     
+     public Time executeRequestTime(String time){
+         
+         try {
+             // Add your data
+             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+             nameValuePairs.add(new BasicNameValuePair("op", "time"));
+             nameValuePairs.add(new BasicNameValuePair("nomeTime", time));
+             
+             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+             // Executa HTTP Post Request
+             HttpResponse response = httpclient.execute(httppost);
+             HttpEntity mensagem = response.getEntity();//pega o json
+              
+             String resp =  EntityUtils.toString(mensagem);// converte o conteudo em string
+                                      
+            //Seta a resposta como um objeto JSON para acessar as informa��es
+            	JSONObject obJson = new JSONObject(resp);
+              
+             Time team = new Time(obJson);
+             return team;
+                      
+         } catch (ClientProtocolException e) {
+         	 getMensage("ERROR" , e.getMessage());
+         } catch (IOException e) {
+         	 getMensage("ERROR" , "IO-ERROR "+e.getMessage());
+         } catch (JSONException e1) {
+         	 getMensage("ERROR" , "IO-ERROR "+ e1.getMessage());
+         }
+         
+ 		return null;
+ 		
+     }
+ 
      
    //M�todo responsavel em criar a requisi��o de busca de um estadio no servidor	
     public Estadio executeRequest(String nomeEstadio){

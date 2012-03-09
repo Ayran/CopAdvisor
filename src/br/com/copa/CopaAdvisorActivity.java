@@ -21,8 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 //Autor George Dias
-/* Activity principal da aplicação responsável em gerar o mapa com a localizaçao do usuário.
- *Também possui a implementação do menu principal da aplicação */
+/* Activity principal da aplicaï¿½ï¿½o responsï¿½vel em gerar o mapa com a localizaï¿½ao do usuï¿½rio.
+ *Tambï¿½m possui a implementaï¿½ï¿½o do menu principal da aplicaï¿½ï¿½o */
 
 
 public class CopaAdvisorActivity extends MapActivity implements LocationListener {
@@ -43,25 +43,27 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
         //Instancia do controlador do mapa
          controlador = mapa.getController();
         
-        //Instancia ums imagem (overlay) que representará o usuario no mapa
+        //Instancia ums imagem (overlay) que representarï¿½ o usuario no mapa
         LocalUserOverlay imagem = new LocalUserOverlay (new PontoIzabel(), R.drawable.red_ball);
         mapa.getOverlays().add(imagem);
                 
         //centraliza o mapa em uma determinada coordenada
         controlador.animateTo(new PontoIzabel());
         
-        //Centraliza o mapa na última localização conhecida
+        //Centraliza o mapa na ultima localizacao conhecida
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
        /* Location local = getLocationManager().getLastKnownLocation(LocationManager.GPS_PROVIDER);
       
-        if(local != null){   //Se existe ultima localização converte para GeoPoint
+        if(local != null){   //Se existe ultima localizacao converte para GeoPoint
         	
-        	Ponto ponto = new Ponto(local);
-        	//Instancia ums imagem (overlay) que representará o usuario no mapa
+        	Ponto ponto = new Ponto(local);minTime
+        	//Instancia ums imagem (overlay) que representarï¿½ o usuario no mapa
         	 imagem = new LocalUserOverlay (ponto, R.drawable.red_ball);
              mapa.getOverlays().add(imagem);
         	controlador.setCenter(ponto);
         }else{
-        	getMensage("Aviso", "Não foi possiver rastrear nova localização");
+        	getMensage("Aviso", "Nï¿½o foi possiver rastrear nova localizaï¿½ï¿½o");
         }
         
         //GPS Listener
@@ -77,7 +79,7 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
        
     }
     
-    /*Metodo responsável pelo menu principal*/
+    /*Metodo responsï¿½vel pelo menu principal*/
     
     public boolean onCreateOptionsMenu(Menu menu){
     	MenuInflater mainMenu = getMenuInflater();
@@ -86,7 +88,7 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
     	return true;
     }
     
-    // Metodo responsável por identificar qual o item de menu escolhido e invocar a Activity correspondente
+    // Metodo responsï¿½vel por identificar qual o item de menu escolhido e invocar a Activity correspondente
     public boolean onOptionsItemSelected(MenuItem itemMenu){
    	 
     	switch(itemMenu.getItemId()){
@@ -100,7 +102,7 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
     			break;
    			 	
     		case R.idMenu.copa: 
-    			/*Manda uma intenção ao SO para executar a activity(tela) desejada*/
+    			/*Manda uma intenï¿½ï¿½o ao SO para executar a activity(tela) desejada*/
     			Intent it = new Intent(this, MenuCopaActivity.class);
     			startActivity(it);
     			break;
@@ -110,7 +112,7 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
     			break;
     		
     		case R.idMenu.configuracoes: 
-    			getMensage("CopaAdvisor", "Menu Configurações"); 
+    			getMensage("CopaAdvisor", "Menu Configuraï¿½ï¿½es"); 
     			break;
    			 
    		}
@@ -126,15 +128,15 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
     	return location;
     }
 
-    //Esse método deve retornar true se sua aplicação estiver traçando rotas ou violará os termos de uso. 
+    //Esse mï¿½todo deve retornar true se sua aplicaï¿½ï¿½o estiver traï¿½ando rotas ou violarï¿½ os termos de uso. 
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	//Método chamado automaticamente pelo Android sempre que a localização do GPS for alterada
-	//Parâmetro location contem a latitude e longitude atual.
+	//Mï¿½todo chamado automaticamente pelo Android sempre que a localizaï¿½ï¿½o do GPS for alterada
+	//Parï¿½metro location contem a latitude e longitude atual.
 	public void onLocationChanged(Location location) {
 		Log.i(CATEGORIA, "latitude" + location.getLatitude() +" longitude"+ location.getLongitude());
 		GeoPoint geoPoint = new Ponto(location);
@@ -144,7 +146,7 @@ public class CopaAdvisorActivity extends MapActivity implements LocationListener
 		
 		mapa.getOverlays().add(imagem);
 		
-		 //Anima o mapa até a nova localização
+		 //Anima o mapa atï¿½ a nova localizaï¿½ï¿½o
 		 controlador.animateTo(geoPoint);
 		 
 		 //invalida para desenhar novamente o mapa

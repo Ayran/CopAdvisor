@@ -14,19 +14,46 @@ public final class R {
         public static final int enviar=0x7f070000;
     }
     public static final class drawable {
-        public static final int amigos=0x7f020000;
-        public static final int argentina=0x7f020001;
-        public static final int bra=0x7f020002;
-        public static final int config=0x7f020003;
-        public static final int copa=0x7f020004;
-        public static final int esp=0x7f020005;
-        public static final int eventos=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
-        public static final int jpn=0x7f020008;
-        public static final int mensagem=0x7f020009;
-        public static final int mini_sinal=0x7f02000a;
-        public static final int red_atach=0x7f02000b;
-        public static final int red_ball=0x7f02000c;
+        public static final int africa_do_sul=0x7f020000;
+        public static final int alemanha=0x7f020001;
+        public static final int amigos=0x7f020002;
+        public static final int argelia=0x7f020003;
+        public static final int argentina=0x7f020004;
+        public static final int australia=0x7f020005;
+        public static final int bra=0x7f020006;
+        public static final int camaroes=0x7f020007;
+        public static final int chile=0x7f020008;
+        public static final int config=0x7f020009;
+        public static final int copa=0x7f02000a;
+        public static final int coreia_norte=0x7f02000b;
+        public static final int coreia_sul=0x7f02000c;
+        public static final int costa_marfim=0x7f02000d;
+        public static final int dinamarca=0x7f02000e;
+        public static final int eslovaquia=0x7f02000f;
+        public static final int eslovenia=0x7f020010;
+        public static final int esp=0x7f020011;
+        public static final int eua=0x7f020012;
+        public static final int eventos=0x7f020013;
+        public static final int fra=0x7f020014;
+        public static final int gana=0x7f020015;
+        public static final int grecia=0x7f020016;
+        public static final int holanda=0x7f020017;
+        public static final int ic_launcher=0x7f020018;
+        public static final int inglaterra=0x7f020019;
+        public static final int italia=0x7f02001a;
+        public static final int jpn=0x7f02001b;
+        public static final int mensagem=0x7f02001c;
+        public static final int mex=0x7f02001d;
+        public static final int mini_sinal=0x7f02001e;
+        public static final int nigeria=0x7f02001f;
+        public static final int nova_zelandia=0x7f020020;
+        public static final int paraguai=0x7f020021;
+        public static final int portugal=0x7f020022;
+        public static final int red_atach=0x7f020023;
+        public static final int red_ball=0x7f020024;
+        public static final int servia=0x7f020025;
+        public static final int suica=0x7f020026;
+        public static final int uruguai=0x7f020027;
     }
     public static final class id {
         public static final int LinearLayout02=0x7f060009;
@@ -34,6 +61,7 @@ public final class R {
         public static final int bandeira=0x7f06000a;
         public static final int cidade=0x7f060002;
         public static final int descricao=0x7f060003;
+        public static final int historico=0x7f06000e;
         public static final int imview=0x7f060000;
         public static final int listEstadios=0x7f060004;
         public static final int listMenuCopa=0x7f060005;
@@ -42,6 +70,7 @@ public final class R {
         public static final int nome=0x7f060001;
         public static final int nomeTime=0x7f06000b;
         public static final int password=0x7f060007;
+        public static final int tecnico=0x7f06000d;
     }
     public static final class idMenu {
         public static final int amigos=0x7f080001;
@@ -58,12 +87,14 @@ public final class R {
         public static final int main=0x7f030004;
         public static final int time_list=0x7f030005;
         public static final int time_view=0x7f030006;
+        public static final int time_view_template=0x7f030007;
     }
     public static final class menu {
         public static final int lista=0x7f050000;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        /**  <string name="hello">CopaAdvisorActivity!</string>
+         */
+        public static final int app_name=0x7f040000;
     }
 }

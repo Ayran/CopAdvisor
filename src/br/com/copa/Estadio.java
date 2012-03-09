@@ -9,7 +9,7 @@ import android.util.Base64;
 
 //Autor George Dias
 
-//Classe model que conterá as informações do estadio
+//Classe model que conterï¿½ as informaï¿½ï¿½es do estadio
 //Serializavel para ser passado como parametro para a Activity
 
 public class Estadio implements Serializable{
@@ -74,6 +74,7 @@ public class Estadio implements Serializable{
 	    public void setFoto(byte[] foto) {
 	        this.foto = foto;
 	    }
+	    
 	    
 
 }
